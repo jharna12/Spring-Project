@@ -14,6 +14,16 @@ import javax.persistence.*;
 		public String getBookTitle() {
 			return bookTitle;
 		}
+	
+		public Book(long bookId, String bookTitle, String bookAuthor) {
+			super();
+			this.bookId = bookId;
+			this.bookTitle = bookTitle;
+			this.bookAuthor = bookAuthor;
+		}
+		public Book()
+		{}
+
 		public Book(String bookTitle, String bookAuthor) {
 			super();
 			this.bookTitle = bookTitle;
