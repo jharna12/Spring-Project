@@ -7,9 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,5 +44,26 @@ public class BookController {
 	@GetMapping("/GetBookById/{bookId}")
 	public Optional<Book> getBook(@PathVariable("bookId") Long id) {
 		return  bookRepository.findById(id); 
+		
 	}
+	@PutMapping("/UpdateAndSave")
+	public Book UpadteAndSaveBook(@Valid @RequestBody Book book) {
+		return bookRepository.save(book); 
+	}
+
+	@DeleteMapping("/DeleteBookById/{bookId}")
+	public String DeleteBook(@PathVariable("bookId") Long id) {
+		Book b=bookRepository.getOne(id);
+		 bookRepository.deleteById(id); 
+		 return "deleted";
+		
+	}
+	@PutMapping("/UpdateBook/{bookId}")
+	public ResponseEntity<Book> updateBook(@PathVariable("bookId") Long id,  @RequestBody Book bookDetails)
+	{
+		Book book= bookRepository.findById(id).get();
+		bookDetails.setBookId(id);
+		bookRepository.save(bookDetails);
+		return ResponseEntity.noContent().build();
+}
 }
