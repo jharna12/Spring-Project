@@ -1,4 +1,5 @@
 package com.example.blog.repository;
+import java.util.*;
 
 	
 	import org.springframework.data.jpa.repository.JpaRepository;
@@ -7,5 +8,5 @@ package com.example.blog.repository;
 import com.example.blog.model.Book;
 	@Repository
 	public interface BookRepository extends JpaRepository<Book,Long> {
-
+public List<Book> findBybookTitle(String name);
 	}
