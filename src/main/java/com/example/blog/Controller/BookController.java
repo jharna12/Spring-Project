@@ -1,12 +1,16 @@
 package com.example.blog.Controller;
 
+
 import java.util.*;
 
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,17 +19,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.blog.model.Book;
 import com.example.blog.repository.BookRepository;
-
-
-@RestController @CrossOrigin(origins = "http://localhost:4200")
-@RequestMapping("/api/v1")
+@ConditionalOnProperty(prefix = "azure-sample-spring-boot", value = "9ec57533-cbc1-43fd-9e10-3579b719e953")
+//@RestController @CrossOrigin(origins = "http://localhost:4200")
+@Controller
+//@RequestMapping("/api/v1")
 public class BookController {
 	@Autowired
 	BookRepository bookRepository;
+	
+	@GetMapping("Users")
+    @ResponseBody
+    @PreAuthorize("hasRole('')")
+    public String group1() {
+        return "group1 message";
+    }
 	@PostMapping("/book")
 	public Book insertBook(@Valid @RequestBody Book book) {
 		return bookRepository.save(book); 
